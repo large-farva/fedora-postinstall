@@ -1,0 +1,89 @@
+# ~/.bashrc - Fedora Personal Config (Sebastian)
+
+# ─── Interactive Session Check ──────────────────────────────────────────────
+case $- in
+  *i*) ;;
+    *) return;;
+esac
+
+# ─── Oh My Bash Configuration ───────────────────────────────────────────────
+export OSH="$HOME/.oh-my-bash"
+OSH_THEME="cooperkid"
+
+ENABLE_CORRECTION="true"
+COMPLETION_WAITING_DOTS="true"
+SCM_GIT_IGNORE_UNTRACKED="false"
+OMB_USE_SUDO=true
+OMB_PROMPT_SHOW_PYTHON_VENV=true
+
+# Load completions (can be found in ~/.oh-my-bash/completions/*)
+completions=(
+  git
+  composer
+  ssh
+)
+
+# Load aliases (can be found in ~/.oh-my-bash/aliases/*)
+aliases=(
+  general
+  ls
+  personal
+)
+
+# Load plugins (can be found in ~/.oh-my-bash/plugins/*)
+plugins=(
+  git
+  bashmarks
+  sudo
+)
+
+# Initialize Oh My Bash
+source "$OSH/oh-my-bash.sh"
+
+# ─── Environment and Shell Settings ─────────────────────────────────────────
+
+# Language
+export LANG=en_US.UTF-8
+
+# Default editor
+export EDITOR='nano'
+
+# Compilation flags
+export ARCHFLAGS="-arch x86_64"
+
+# Add user-local bin to PATH
+export PATH="$HOME/.local/bin:$PATH"
+
+# Homebrew path (ensures brew is usable after install)
+if [ -d "/home/linuxbrew/.linuxbrew" ]; then
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
+# ─── Smart Shell Features ───────────────────────────────────────────────────
+
+# Better history settings
+HISTCONTROL=ignoredups:erasedups
+HISTSIZE=10000
+HISTFILESIZE=20000
+shopt -s histappend
+PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
+
+# Advanced globbing
+shopt -s globstar
+shopt -s nocaseglob
+
+# Enable aliases with sudo
+alias sudo='sudo '
+
+# Long command notification timeout (for Oh My Bash themes that support it)
+export LONG_RUNNING_COMMAND_TIMEOUT=10
+
+# ─── Colored man pages ──────────────────────────────────────────────────────
+
+export LESS_TERMCAP_mb=$'\E[1;31m'
+export LESS_TERMCAP_md=$'\E[1;36m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_so=$'\E[01;44;33m'
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[1;32m'
